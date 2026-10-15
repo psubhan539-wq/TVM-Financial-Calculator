@@ -1,0 +1,5115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TVM Financial Calculator</title>
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --primary: #426b58;
+    --primary-dark: #294638;
+    --primary-light: #f3f5f0;
+
+    --success: #16a34a;
+    --danger: #dc2626;
+
+    --text: #252e28;
+    --muted: #68756b;
+
+    --border: #dfe3dc;
+    --white: #ffffff;
+
+    --background: #f2f3ef;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    min-height: 100vh;
+
+    color: var(--text);
+
+    background: #f2f3ef;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+
+    padding: 35px 20px 20px;
+
+    text-align: center;
+}
+
+
+.logo-circle {
+
+    width: 58px;
+    height: 58px;
+
+    margin:
+        auto
+        auto
+        14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #426b58,
+            #263b31
+        );
+
+    color: white;
+
+    font-size: 26px;
+    font-weight: bold;
+
+    box-shadow:
+        0 12px 25px
+        rgba(41,70,56,0.14);
+}
+
+
+.top-header h1 {
+
+    font-size: 34px;
+
+    color: #263b31;
+
+    margin-bottom: 7px;
+}
+
+
+.top-header p {
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+.badge {
+
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 7px 13px;
+
+    background:
+        rgba(66,107,88,0.08);
+
+    border:
+        1px solid
+        rgba(66,107,88,0.14);
+
+    border-radius: 30px;
+
+    color: var(--primary-dark);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width: 94%;
+
+    max-width: 1150px;
+
+    margin:
+        15px auto
+        40px;
+}
+
+
+/* =========================================================
+   MAIN APPLICATION
+========================================================= */
+
+.app {
+
+    background: #ffffff;
+    border: 1px solid #e0e3dc;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(36, 48, 39, 0.07);
+}
+
+
+/* =========================================================
+   APP HEADER
+========================================================= */
+
+.app-top {
+
+    padding: 22px 26px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.app-title-icon {
+
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dce6dc,
+            #f3f5f0
+        );
+
+    color: var(--primary);
+
+    font-size: 21px;
+}
+
+
+.app-title h2 {
+
+    font-size: 19px;
+
+    color: #263b31;
+}
+
+
+.app-title span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   CALCULATOR TABS
+========================================================= */
+
+.calculator-nav {
+
+    padding: 18px 22px;
+
+    background: #f6f7f3;
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+
+.nav-scroll {
+
+    display: flex;
+
+    gap: 10px;
+
+    overflow-x: auto;
+
+    padding-bottom: 3px;
+}
+
+
+.nav-scroll::-webkit-scrollbar {
+
+    height: 4px;
+}
+
+
+.nav-scroll::-webkit-scrollbar-thumb {
+
+    background: #cbd2c9;
+
+    border-radius: 20px;
+}
+
+
+.calc-tab {
+
+    flex:
+        0 0 auto;
+
+    border:
+        1px solid
+        #dbe4f0;
+
+    background: white;
+
+    color: #4f5c52;
+
+    padding:
+        11px 15px;
+
+    border-radius: 13px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    transition:
+        0.22s ease;
+}
+
+
+.calc-tab:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #a6b9a8;
+
+    box-shadow:
+        0 7px 18px
+        rgba(41,70,56,0.08);
+}
+
+
+.calc-tab.active {
+
+    background: #426b58;
+
+    color: white;
+
+    border-color:
+        transparent;
+
+    box-shadow:
+        0 9px 20px
+        rgba(41,70,56,0.14);
+}
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0,0.95fr)
+        minmax(0,1.05fr);
+}
+
+
+/* =========================================================
+   FORM PANEL
+========================================================= */
+
+.form-panel {
+
+    padding: 28px;
+
+    border-right:
+        1px solid
+        var(--border);
+}
+
+
+.form-heading {
+
+    font-size: 25px;
+
+    color: #263b31;
+
+    margin-bottom: 7px;
+}
+
+
+.form-description {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   FORMULA
+========================================================= */
+
+.formula-box {
+
+    background: #f5f7f2;
+
+    border:
+        1px solid
+        #dce6dc;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    margin-bottom: 21px;
+}
+
+
+.formula-label {
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color: var(--primary);
+
+    font-weight: 800;
+
+    margin-bottom: 6px;
+}
+
+
+.formula-text {
+
+    font-size: 14px;
+
+    color: #294638;
+
+    font-weight: 700;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FIELDS
+========================================================= */
+
+.field {
+
+    margin-bottom: 17px;
+}
+
+
+.field label {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #39483d;
+
+    margin-bottom: 7px;
+}
+
+
+.input-wrap {
+
+    position: relative;
+}
+
+
+.input-icon {
+
+    position: absolute;
+
+    left: 13px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #68756b;
+
+    font-size: 15px;
+
+    pointer-events: none;
+}
+
+
+.input-wrap input {
+
+    padding-left: 40px;
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    height: 47px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid
+        #cbd2c9;
+
+    border-radius: 11px;
+
+    background: white;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+input:focus,
+select:focus {
+
+    border-color:
+        var(--primary);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(66,107,88,0.12);
+}
+
+
+/* =========================================================
+   UNIT ROW
+========================================================= */
+
+.unit-row {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0,2fr)
+        minmax(115px,1fr);
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.action-row {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        120px;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+
+.primary-btn,
+.secondary-btn {
+
+    border: 0;
+
+    height: 48px;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    transition:
+        0.22s;
+}
+
+
+.primary-btn {
+
+    background: #426b58;
+
+    color: white;
+
+    box-shadow:
+        0 9px 20px
+        rgba(41,70,56,0.16);
+}
+
+
+.primary-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 13px 26px
+        rgba(41,70,56,0.14);
+}
+
+
+.secondary-btn {
+
+    background:
+        #f0f2ed;
+
+    color:
+        #4f5c52;
+}
+
+
+.secondary-btn:hover {
+
+    background:
+        #dfe3dc;
+}
+
+
+/* =========================================================
+   EXAMPLE BUTTON
+========================================================= */
+
+.sample-btn {
+
+    display: inline-block;
+
+    margin-top: 11px;
+
+    background: transparent;
+
+    border: 0;
+
+    color:
+        var(--primary);
+
+    font-weight: 700;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+.sample-btn:hover {
+
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   RESULT PANEL
+========================================================= */
+
+.result-panel {
+
+    padding: 28px;
+
+    background: #f8f9f6;
+
+    min-height: 500px;
+}
+
+
+/* =========================================================
+   EMPTY RESULT
+========================================================= */
+
+.empty-state {
+
+    min-height: 440px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+
+.empty-icon {
+
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin:
+        auto
+        auto
+        15px;
+
+    border-radius: 14px;
+
+    background: #dce6dc;
+
+    color: var(--primary);
+
+    font-size: 30px;
+}
+
+
+.empty-state h3 {
+
+    color: #263b31;
+
+    font-size: 20px;
+
+    margin-bottom: 6px;
+}
+
+
+.empty-state p {
+
+    color:
+        var(--muted);
+
+    max-width: 300px;
+
+    margin: auto;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESULT HEADER
+========================================================= */
+
+.result-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+.result-header h3 {
+
+    font-size: 21px;
+
+    color: #263b31;
+}
+
+
+.result-tag {
+
+    background:
+        #e3eee3;
+
+    color:
+        #315d3c;
+
+    border-radius:
+        30px;
+
+    padding:
+        6px 10px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MAIN RESULT
+========================================================= */
+
+.primary-result {
+
+    background: #f4f7f2;
+
+    border:
+        1px solid
+        #dce6dc;
+
+    border-radius:
+        17px;
+
+    padding:
+        20px;
+
+    margin-bottom:
+        14px;
+}
+
+
+.primary-result-label {
+
+    font-size: 12px;
+
+    color:
+        var(--muted);
+
+    margin-bottom:
+        6px;
+}
+
+
+.primary-result-value {
+
+    font-size: 31px;
+
+    font-weight: 900;
+
+    color:
+        #294638;
+
+    word-break:
+        break-word;
+}
+
+
+/* =========================================================
+   RESULT GRID
+========================================================= */
+
+.result-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap: 10px;
+}
+
+
+.result-card {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        13px;
+
+    padding:
+        14px;
+}
+
+
+.result-card span {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 5px;
+}
+
+
+.result-card strong {
+
+    color:
+        #263b31;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   EXPLANATION
+========================================================= */
+
+.explanation {
+
+    margin-top: 14px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background:
+        #f7f8f4;
+
+    border:
+        1px solid
+        var(--border);
+
+    font-size: 12px;
+
+    color:
+        #4f5c52;
+
+    line-height: 1.6;
+}
+
+
+.explanation strong {
+
+    color:
+        #294638;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-box {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border-radius: 11px;
+
+    background:
+        #fef2f2;
+
+    border-left:
+        5px solid
+        var(--danger);
+
+    color:
+        #991b1b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper {
+
+    margin-top:
+        15px;
+
+    max-height:
+        390px;
+
+    overflow:
+        auto;
+
+    border-radius:
+        12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        white;
+}
+
+
+table {
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    font-size:
+        12px;
+}
+
+
+th {
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        2;
+
+    background:
+        #294638;
+
+    color:
+        white;
+
+    padding:
+        10px 8px;
+
+    white-space:
+        nowrap;
+}
+
+
+td {
+
+    padding:
+        8px;
+
+    border-bottom:
+        1px solid
+        #dfe3dc;
+
+    white-space:
+        nowrap;
+
+    text-align:
+        right;
+}
+
+
+td:first-child {
+
+    text-align:
+        center;
+
+    font-weight:
+        700;
+}
+
+
+tr:nth-child(even) {
+
+    background:
+        #f7f8f4;
+}
+
+
+/* =========================================================
+   SCENARIO
+========================================================= */
+
+.scenario-row {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--border);
+
+    padding:
+        12px;
+
+    border-radius:
+        12px;
+
+    margin-bottom:
+        9px;
+}
+
+
+.scenario-top {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        7px;
+}
+
+
+.scenario-rate {
+
+    font-weight:
+        900;
+
+    color:
+        #294638;
+}
+
+
+.scenario-emi {
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+}
+
+
+.scenario-bar {
+
+    height:
+        7px;
+
+    border-radius:
+        20px;
+
+    background:
+        #dfe3dc;
+
+    overflow:
+        hidden;
+}
+
+
+.scenario-fill {
+
+    height:
+        100%;
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #789783,
+            #426b58
+        );
+}
+
+
+.scenario-details {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        8px;
+
+    margin-top:
+        8px;
+}
+
+
+.scenario-detail {
+
+    font-size:
+        11px;
+
+    color:
+        var(--muted);
+}
+
+
+.scenario-detail strong {
+
+    display:
+        block;
+
+    color:
+        #39483d;
+
+    font-size:
+        12px;
+
+    margin-top:
+        2px;
+}
+
+
+/* =========================================================
+   ANNUITY INFO
+========================================================= */
+
+.annuity-note {
+
+    margin-top:
+        12px;
+
+    padding:
+        11px;
+
+    border-radius:
+        10px;
+
+    background:
+        #f7f8f4;
+
+    border:
+        1px solid
+        var(--border);
+
+    font-size:
+        11px;
+
+    color:
+        var(--muted);
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+.animate-in {
+
+    animation:
+        fadeSlide
+        0.30s ease;
+}
+
+
+@keyframes fadeSlide {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(8px);
+
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    text-align:
+        center;
+
+    color:
+        #68756b;
+
+    padding:
+        20px;
+
+    font-size:
+        12px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .workspace {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .form-panel {
+
+        border-right:
+            0;
+
+        border-bottom:
+            1px solid
+            var(--border);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .top-header h1 {
+
+        font-size:
+            27px;
+    }
+
+    .app {
+
+        border-radius:
+            18px;
+    }
+
+    .form-panel,
+    .result-panel {
+
+        padding:
+            20px;
+    }
+
+    .result-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .action-row {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .unit-row {
+
+        grid-template-columns:
+            1fr;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="top-header">
+
+    <div class="logo-circle">
+        ₹
+    </div>
+
+    <h1>
+        Time Value of Money
+    </h1>
+
+    <p>
+        Smart Financial Calculation & Loan Analysis
+    </p>
+
+    <div class="badge">
+        Finance for Engineers, Designers and Professionals
+    </div>
+
+</header>
+
+
+<div class="page">
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     APP HEADER
+========================================================= -->
+
+<div class="app-top">
+
+    <div class="app-title-icon">
+        ◈
+    </div>
+
+    <div>
+
+        <div class="app-title">
+
+            <h2>
+                TVM Financial Calculator
+            </h2>
+
+        </div>
+
+        <span>
+            Seven required modules + optional annuity cash-flow analysis
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<div class="calculator-nav">
+
+    <div class="nav-scroll">
+
+
+        <button
+            class="calc-tab active"
+            data-type="fv"
+            onclick="selectCalculator('fv')"
+        >
+            📈 Future Value
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="pv"
+            onclick="selectCalculator('pv')"
+        >
+            💰 Present Value
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="si"
+            onclick="selectCalculator('si')"
+        >
+            🧮 Simple Interest
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="ci"
+            onclick="selectCalculator('ci')"
+        >
+            📊 Compound Interest
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="emi"
+            onclick="selectCalculator('emi')"
+        >
+            🏦 EMI
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="amortization"
+            onclick="selectCalculator('amortization')"
+        >
+            📋 Amortization
+        </button>
+
+
+        <button
+            class="calc-tab"
+            data-type="scenario"
+            onclick="selectCalculator('scenario')"
+        >
+            🔍 Scenario
+        </button>
+
+
+        <!-- NEW -->
+
+        <button
+            class="calc-tab"
+            data-type="annuity"
+            onclick="selectCalculator('annuity')"
+        >
+            🔄 Annuity
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     WORKSPACE
+========================================================= -->
+
+<div class="workspace">
+
+
+<!-- =========================================================
+     FORM
+========================================================= -->
+
+<div class="form-panel">
+
+    <div id="formArea"></div>
+
+    <div
+        id="errorBox"
+        class="error-box"
+    ></div>
+
+</div>
+
+
+<!-- =========================================================
+     RESULT
+========================================================= -->
+
+<div class="result-panel">
+
+    <div id="resultArea">
+
+        <div class="empty-state">
+
+            <div>
+
+                <div class="empty-icon">
+                    ◎
+                </div>
+
+                <h3>
+                    Ready to Calculate
+                </h3>
+
+                <p>
+                    Select a calculator and enter
+                    the required financial information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+    TVM Financial Calculator • Assignment 1
+
+</footer>
+
+
+<script>
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+let currentCalculator = "fv";
+
+
+/* =========================================================
+   FORMAT MONEY
+========================================================= */
+
+function formatMoney(value) {
+
+    return "₹" +
+        Number(value).toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+}
+
+
+/* =========================================================
+   GET VALUE
+========================================================= */
+
+function getValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+        return NaN;
+    }
+
+    return parseFloat(
+        element.value
+    );
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message) {
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+    box.innerHTML =
+        "⚠ " + message;
+
+    box.style.display =
+        "block";
+}
+
+
+function hideError() {
+
+    document.getElementById(
+        "errorBox"
+    ).style.display =
+        "none";
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult(html) {
+
+    document.getElementById(
+        "resultArea"
+    ).innerHTML =
+        `<div class="animate-in">${html}</div>`;
+}
+
+
+function clearResult() {
+
+    document.getElementById(
+        "resultArea"
+    ).innerHTML = `
+
+        <div class="empty-state animate-in">
+
+            <div>
+
+                <div class="empty-icon">
+                    ◎
+                </div>
+
+                <h3>
+                    Ready to Calculate
+                </h3>
+
+                <p>
+                    Enter the required values and
+                    calculate your result.
+                </p>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   TIME CONVERSION
+========================================================= */
+
+function convertToYears(value, unit) {
+
+    if (unit === "months") {
+
+        return value / 12;
+    }
+
+    return value;
+}
+
+
+function convertToMonths(value, unit) {
+
+    if (unit === "years") {
+
+        return Math.round(
+            value * 12
+        );
+    }
+
+    return Math.round(value);
+}
+
+
+/* =========================================================
+   CALCULATOR SELECTION
+========================================================= */
+
+function selectCalculator(type) {
+
+    currentCalculator =
+        type;
+
+    hideError();
+
+    clearResult();
+
+
+    document
+        .querySelectorAll(
+            ".calc-tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const active =
+        document.querySelector(
+            `.calc-tab[data-type="${type}"]`
+        );
+
+
+    if (active) {
+
+        active.classList.add(
+            "active"
+        );
+    }
+
+
+    loadForm(type);
+}
+
+
+/* =========================================================
+   LOAD FORM
+========================================================= */
+
+function loadForm(type) {
+
+
+/* =========================================================
+   FUTURE VALUE
+========================================================= */
+
+if (type === "fv") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Future Value
+</h2>
+
+<p class="form-description">
+    Find how much a current amount will grow
+    to in the future.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Formula
+</div>
+
+<div class="formula-text">
+    FV = P × (1 + r)<sup>t</sup>
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Principal Amount
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="fvPrincipal"
+    type="number"
+    placeholder="e.g. 100000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Annual Interest Rate (%)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="fvRate"
+    type="number"
+    placeholder="e.g. 10"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Time Period
+</label>
+
+<div class="unit-row">
+
+<input
+    id="fvTime"
+    type="number"
+    placeholder="e.g. 5"
+    min="0"
+    step="any"
+>
+
+<select id="fvTimeUnit">
+
+<option value="years">
+    Years
+</option>
+
+<option value="months">
+    Months
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="calculateFV()"
+>
+    Calculate FV
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleFV()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   PRESENT VALUE
+========================================================= */
+
+else if (type === "pv") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Present Value
+</h2>
+
+<p class="form-description">
+    Find what a future amount is worth today.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Formula
+</div>
+
+<div class="formula-text">
+    PV = FV ÷ (1 + r)<sup>t</sup>
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Future Value
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="pvFuture"
+    type="number"
+    placeholder="e.g. 150000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Discount Rate (%)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="pvRate"
+    type="number"
+    placeholder="e.g. 10"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Time Period
+</label>
+
+<div class="unit-row">
+
+<input
+    id="pvTime"
+    type="number"
+    placeholder="e.g. 5"
+    min="0"
+    step="any"
+>
+
+<select id="pvTimeUnit">
+
+<option value="years">
+    Years
+</option>
+
+<option value="months">
+    Months
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="calculatePV()"
+>
+    Calculate PV
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="samplePV()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   SIMPLE INTEREST
+========================================================= */
+
+else if (type === "si") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Simple Interest
+</h2>
+
+<p class="form-description">
+    Calculate interest based only on the original
+    principal.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Formula
+</div>
+
+<div class="formula-text">
+    I = P × r × t
+    <br>
+    Maturity = P + I
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Principal
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="siPrincipal"
+    type="number"
+    placeholder="e.g. 100000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Interest Rate (%)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="siRate"
+    type="number"
+    placeholder="e.g. 8"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Time Period
+</label>
+
+<div class="unit-row">
+
+<input
+    id="siTime"
+    type="number"
+    placeholder="e.g. 6"
+    min="0"
+    step="any"
+>
+
+<select id="siTimeUnit">
+
+<option value="years">
+    Years
+</option>
+
+<option value="months">
+    Months
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="calculateSI()"
+>
+    Calculate SI
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleSI()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   COMPOUND INTEREST
+========================================================= */
+
+else if (type === "ci") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Compound Interest
+</h2>
+
+<p class="form-description">
+    Calculate compound interest using the selected
+    compounding frequency.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Formula
+</div>
+
+<div class="formula-text">
+    A = P × (1 + r/n)<sup>nt</sup>
+    <br>
+    CI = A − P
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Principal
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="ciPrincipal"
+    type="number"
+    placeholder="e.g. 100000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Rate (%)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="ciRate"
+    type="number"
+    placeholder="e.g. 10"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Time Period
+</label>
+
+<div class="unit-row">
+
+<input
+    id="ciTime"
+    type="number"
+    placeholder="e.g. 5"
+    min="0"
+    step="any"
+>
+
+<select id="ciTimeUnit">
+
+<option value="years">
+    Years
+</option>
+
+<option value="months">
+    Months
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Compounding Frequency
+</label>
+
+<select id="ciFrequency">
+
+<option value="1">
+    Annually
+</option>
+
+<option value="2">
+    Half-Yearly
+</option>
+
+<option value="4">
+    Quarterly
+</option>
+
+<option value="12">
+    Monthly
+</option>
+
+</select>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="calculateCI()"
+>
+    Calculate CI
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleCI()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   EMI
+========================================================= */
+
+else if (type === "emi") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    EMI Calculator
+</h2>
+
+<p class="form-description">
+    Calculate monthly EMI, total payment and
+    total interest.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Formula
+</div>
+
+<div class="formula-text">
+    EMI =
+    P × r × (1+r)<sup>n</sup>
+    /
+    [(1+r)<sup>n</sup> − 1]
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Amount
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="emiLoan"
+    type="number"
+    placeholder="e.g. 500000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Interest Rate (% per year)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="emiRate"
+    type="number"
+    placeholder="e.g. 10.5"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Tenure
+</label>
+
+<div class="unit-row">
+
+<input
+    id="emiTenure"
+    type="number"
+    placeholder="e.g. 60"
+    min="0"
+    step="any"
+>
+
+<select id="emiTenureUnit">
+
+<option value="months">
+    Months
+</option>
+
+<option value="years">
+    Years
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="calculateEMI()"
+>
+    Calculate EMI
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleEMI()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   AMORTIZATION
+========================================================= */
+
+else if (type === "amortization") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Loan Amortization
+</h2>
+
+<p class="form-description">
+    Generate an automatic month-by-month repayment
+    schedule.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Monthly Logic
+</div>
+
+<div class="formula-text">
+    Interest = Opening Balance × Monthly Rate
+    <br>
+    Principal = EMI − Interest
+    <br>
+    Closing = Opening − Principal
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Amount
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="amLoan"
+    type="number"
+    placeholder="e.g. 500000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Interest Rate (% per year)
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    %
+</span>
+
+<input
+    id="amRate"
+    type="number"
+    placeholder="e.g. 10.5"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Tenure
+</label>
+
+<div class="unit-row">
+
+<input
+    id="amTenure"
+    type="number"
+    placeholder="e.g. 60"
+    min="0"
+    step="any"
+>
+
+<select id="amTenureUnit">
+
+<option value="months">
+    Months
+</option>
+
+<option value="years">
+    Years
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="generateAmortization()"
+>
+    Generate Schedule
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleAmortization()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   SCENARIO
+========================================================= */
+
+else if (type === "scenario") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Scenario Analysis
+</h2>
+
+<p class="form-description">
+    Compare the same loan under four different
+    interest-rate scenarios.
+</p>
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Rates Compared Automatically
+</div>
+
+<div class="formula-text">
+    8% • 10% • 12% • 15%
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Amount
+</label>
+
+<div class="input-wrap">
+
+<span class="input-icon">
+    ₹
+</span>
+
+<input
+    id="scLoan"
+    type="number"
+    placeholder="e.g. 500000"
+    min="0"
+    step="any"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Loan Tenure
+</label>
+
+<div class="unit-row">
+
+<input
+    id="scTenure"
+    type="number"
+    placeholder="e.g. 60"
+    min="0"
+    step="any"
+>
+
+<select id="scTenureUnit">
+
+<option value="months">
+    Months
+</option>
+
+<option value="years">
+    Years
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="action-row">
+
+<button
+    class="primary-btn"
+    onclick="scenarioAnalysis()"
+>
+    Compare Scenarios
+</button>
+
+<button
+    class="secondary-btn"
+    onclick="resetCurrent()"
+>
+    Reset
+</button>
+
+</div>
+
+<button
+    class="sample-btn"
+    onclick="sampleScenario()"
+>
+    ✦ Try example values
+</button>
+`;
+
+}
+
+
+/* =========================================================
+   ANNUITY - NEW
+========================================================= */
+
+else if (type === "annuity") {
+
+document.getElementById(
+"formArea"
+).innerHTML = `
+
+<h2 class="form-heading">
+    Annuity & Cash Flow
+</h2>
+
+<p class="form-description">
+    Calculate periodic cash flows for an
+    Ordinary Annuity or Annuity Due.
+</p>
+
+
+<div class="formula-box">
+
+<div class="formula-label">
+    Cash Flow Timing
+</div>
+
+<div class="formula-text">
+    Ordinary Annuity = payment at end
+    <br>
+    Annuity Due = payment at beginning
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Type of Annuity
+</label>
+
+<select id="annuityType">
+
+<option value="ordinary">
+    Ordinary Annuity
+</option>
+
+<option value="due">
+    Annuity Due
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    What do you want to calculate?
+</label>
+
+<select
+    id="annuityCalculation"
+    onchange="updateAnnuityFields()"
+>
+
+<option value="pv">
+    Present Value from Cash Flows
+</option>
+
+<option value="fv">
+    Future Value from Cash Flows
+</option>
+
+<option value="pmtPV">
+    Payment from Present Value
+</option>
+
+<option value="pmtFV">
+    Payment from Future Value
+</option>
+
+</select>
+
+</div>
+
+
+<div id="annuityDynamicFields"></div>
+
+<button
+    class="sample-btn"
+    onclick="sampleAnnuity()"
+>
+    ✦ Try example values
+</button>
+`;
+
+updateAnnuityFields();
+
+}
+
+}
+
+
+/* =========================================================
+   ANNUITY DYNAMIC FIELDS
+========================================================= */
+
+function updateAnnuityFields() {
+
+    const mode =
+        document.getElementById(
+            "annuityCalculation"
+        ).value;
+
+
+    let html = "";
+
+
+    /* PAYMENT INPUT */
+
+    if (
+        mode === "pv" ||
+        mode === "fv"
+    ) {
+
+        html += `
+
+            <div class="field">
+
+                <label>
+                    Cash Flow / Payment Amount
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ₹
+                    </span>
+
+                    <input
+                        id="annuityPayment"
+                        type="number"
+                        placeholder="e.g. 10000"
+                        min="0"
+                        step="any"
+                    >
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* PV INPUT */
+
+    if (
+        mode === "pmtPV"
+    ) {
+
+        html += `
+
+            <div class="field">
+
+                <label>
+                    Present Value
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ₹
+                    </span>
+
+                    <input
+                        id="annuityPV"
+                        type="number"
+                        placeholder="e.g. 500000"
+                        min="0"
+                        step="any"
+                    >
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* FV INPUT */
+
+    if (
+        mode === "pmtFV"
+    ) {
+
+        html += `
+
+            <div class="field">
+
+                <label>
+                    Future Value
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ₹
+                    </span>
+
+                    <input
+                        id="annuityFV"
+                        type="number"
+                        placeholder="e.g. 750000"
+                        min="0"
+                        step="any"
+                    >
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* INTEREST RATE */
+
+    html += `
+
+        <div class="field">
+
+            <label>
+                Interest Rate (% per year)
+            </label>
+
+            <div class="input-wrap">
+
+                <span class="input-icon">
+                    %
+                </span>
+
+                <input
+                    id="annuityRate"
+                    type="number"
+                    placeholder="e.g. 10"
+                    min="0"
+                    step="any"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Number of Payments
+            </label>
+
+            <input
+                id="annuityPeriods"
+                type="number"
+                placeholder="e.g. 60"
+                min="1"
+                step="1"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Payment Frequency
+            </label>
+
+            <select id="annuityFrequency">
+
+                <option value="1">
+                    Annual
+                </option>
+
+                <option value="2">
+                    Half-Yearly
+                </option>
+
+                <option value="4">
+                    Quarterly
+                </option>
+
+                <option value="12">
+                    Monthly
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="action-row">
+
+            <button
+                class="primary-btn"
+                onclick="calculateAnnuity()"
+            >
+                Calculate Annuity
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="resetCurrent()"
+            >
+                Reset
+            </button>
+
+        </div>
+
+
+        <div class="annuity-note">
+
+            <strong>Example:</strong>
+            For ₹10,000 paid monthly for 5 years,
+            enter 60 payments and select Monthly.
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "annuityDynamicFields"
+    ).innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   FUTURE VALUE
+========================================================= */
+
+function calculateFV() {
+
+    hideError();
+
+    const P =
+        getValue("fvPrincipal");
+
+    const rate =
+        getValue("fvRate");
+
+    const timeValue =
+        getValue("fvTime");
+
+    const unit =
+        document.getElementById(
+            "fvTimeUnit"
+        ).value;
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a principal amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid interest rate."
+        );
+        return;
+    }
+
+
+    if (!timeValue || timeValue <= 0) {
+        showError(
+            "Please enter a valid time period."
+        );
+        return;
+    }
+
+
+    const t =
+        convertToYears(
+            timeValue,
+            unit
+        );
+
+
+    const r =
+        rate / 100;
+
+
+    const FV =
+        P *
+        Math.pow(
+            1 + r,
+            t
+        );
+
+
+    showResult(`
+
+        <div class="result-header">
+            <h3>Future Value Result</h3>
+            <span class="result-tag">
+                CALCULATED
+            </span>
+        </div>
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                Future Value
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(FV)}
+            </div>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Principal</span>
+                <strong>${formatMoney(P)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Interest Rate</span>
+                <strong>${rate}%</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Entered Time</span>
+                <strong>${timeValue} ${unit}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Time Used</span>
+                <strong>${t.toFixed(4)} years</strong>
+            </div>
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            The selected time is converted to years
+            when months are entered, and then the
+            Future Value formula is applied.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   PRESENT VALUE
+========================================================= */
+
+function calculatePV() {
+
+    hideError();
+
+
+    const FV =
+        getValue("pvFuture");
+
+    const rate =
+        getValue("pvRate");
+
+    const timeValue =
+        getValue("pvTime");
+
+    const unit =
+        document.getElementById(
+            "pvTimeUnit"
+        ).value;
+
+
+    if (!FV || FV <= 0) {
+        showError(
+            "Please enter a future value greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid discount rate."
+        );
+        return;
+    }
+
+
+    if (!timeValue || timeValue <= 0) {
+        showError(
+            "Please enter a valid time period."
+        );
+        return;
+    }
+
+
+    const t =
+        convertToYears(
+            timeValue,
+            unit
+        );
+
+
+    const r =
+        rate / 100;
+
+
+    const PV =
+        FV /
+        Math.pow(
+            1 + r,
+            t
+        );
+
+
+    showResult(`
+
+        <div class="result-header">
+            <h3>Present Value Result</h3>
+            <span class="result-tag">
+                CALCULATED
+            </span>
+        </div>
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                Present Value
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(PV)}
+            </div>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Future Value</span>
+                <strong>${formatMoney(FV)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Discount Rate</span>
+                <strong>${rate}%</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Entered Time</span>
+                <strong>${timeValue} ${unit}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Time Used</span>
+                <strong>${t.toFixed(4)} years</strong>
+            </div>
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            Present Value discounts the future amount
+            back to today's value.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   SIMPLE INTEREST
+========================================================= */
+
+function calculateSI() {
+
+    hideError();
+
+
+    const P =
+        getValue("siPrincipal");
+
+    const rate =
+        getValue("siRate");
+
+    const timeValue =
+        getValue("siTime");
+
+    const unit =
+        document.getElementById(
+            "siTimeUnit"
+        ).value;
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a principal amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid interest rate."
+        );
+        return;
+    }
+
+
+    if (!timeValue || timeValue <= 0) {
+        showError(
+            "Please enter a valid time period."
+        );
+        return;
+    }
+
+
+    const t =
+        convertToYears(
+            timeValue,
+            unit
+        );
+
+
+    const interest =
+        P *
+        (rate / 100) *
+        t;
+
+
+    const maturity =
+        P + interest;
+
+
+    showResult(`
+
+        <div class="result-header">
+            <h3>Simple Interest Result</h3>
+            <span class="result-tag">
+                CALCULATED
+            </span>
+        </div>
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                Interest Earned
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(interest)}
+            </div>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Principal</span>
+                <strong>${formatMoney(P)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Maturity Value</span>
+                <strong>${formatMoney(maturity)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Rate</span>
+                <strong>${rate}%</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Time</span>
+                <strong>${timeValue} ${unit}</strong>
+            </div>
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            Simple Interest is calculated only
+            on the original principal.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   COMPOUND INTEREST
+========================================================= */
+
+function calculateCI() {
+
+    hideError();
+
+
+    const P =
+        getValue("ciPrincipal");
+
+    const rate =
+        getValue("ciRate");
+
+    const timeValue =
+        getValue("ciTime");
+
+    const unit =
+        document.getElementById(
+            "ciTimeUnit"
+        ).value;
+
+    const n =
+        getValue("ciFrequency");
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a principal amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid interest rate."
+        );
+        return;
+    }
+
+
+    if (!timeValue || timeValue <= 0) {
+        showError(
+            "Please enter a valid time period."
+        );
+        return;
+    }
+
+
+    const t =
+        convertToYears(
+            timeValue,
+            unit
+        );
+
+
+    const r =
+        rate / 100;
+
+
+    const maturity =
+        P *
+        Math.pow(
+            1 + r / n,
+            n * t
+        );
+
+
+    const interest =
+        maturity - P;
+
+
+    showResult(`
+
+        <div class="result-header">
+            <h3>Compound Interest Result</h3>
+            <span class="result-tag">
+                CALCULATED
+            </span>
+        </div>
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                Compound Interest
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(interest)}
+            </div>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Principal</span>
+                <strong>${formatMoney(P)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Maturity Value</span>
+                <strong>${formatMoney(maturity)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Rate</span>
+                <strong>${rate}%</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Frequency</span>
+                <strong>${frequencyName(n)}</strong>
+            </div>
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            Interest is compounded according to
+            the selected frequency.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   FREQUENCY NAME
+========================================================= */
+
+function frequencyName(n) {
+
+    if (n === 1) {
+        return "Annually";
+    }
+
+    if (n === 2) {
+        return "Half-Yearly";
+    }
+
+    if (n === 4) {
+        return "Quarterly";
+    }
+
+    if (n === 12) {
+        return "Monthly";
+    }
+
+    return n + " times/year";
+}
+
+
+/* =========================================================
+   EMI
+========================================================= */
+
+function calculateEMIValue(
+    P,
+    annualRate,
+    months
+) {
+
+    const r =
+        annualRate / 12 / 100;
+
+
+    if (r === 0) {
+
+        return P / months;
+    }
+
+
+    return (
+
+        P *
+        r *
+        Math.pow(
+            1 + r,
+            months
+        )
+
+    )
+    /
+    (
+
+        Math.pow(
+            1 + r,
+            months
+        ) - 1
+
+    );
+}
+
+
+/* =========================================================
+   EMI CALCULATOR
+========================================================= */
+
+function calculateEMI() {
+
+    hideError();
+
+
+    const P =
+        getValue("emiLoan");
+
+    const rate =
+        getValue("emiRate");
+
+    const tenure =
+        getValue("emiTenure");
+
+    const unit =
+        document.getElementById(
+            "emiTenureUnit"
+        ).value;
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a loan amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid interest rate."
+        );
+        return;
+    }
+
+
+    if (!tenure || tenure <= 0) {
+        showError(
+            "Please enter a valid loan tenure."
+        );
+        return;
+    }
+
+
+    const months =
+        convertToMonths(
+            tenure,
+            unit
+        );
+
+
+    const EMI =
+        calculateEMIValue(
+            P,
+            rate,
+            months
+        );
+
+
+    const totalPayment =
+        EMI * months;
+
+
+    const totalInterest =
+        totalPayment - P;
+
+
+    showResult(`
+
+        <div class="result-header">
+            <h3>EMI Result</h3>
+            <span class="result-tag">
+                CALCULATED
+            </span>
+        </div>
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                Monthly EMI
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(EMI)}
+            </div>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Loan Amount</span>
+                <strong>${formatMoney(P)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Interest Rate</span>
+                <strong>${rate}%</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Entered Tenure</span>
+                <strong>${tenure} ${unit}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Total Months</span>
+                <strong>${months}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Total Payment</span>
+                <strong>${formatMoney(totalPayment)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Total Interest</span>
+                <strong>${formatMoney(totalInterest)}</strong>
+            </div>
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            Annual interest is converted into a
+            monthly rate and the tenure is converted
+            into the total number of monthly payments.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   AMORTIZATION
+========================================================= */
+
+function generateAmortization() {
+
+    hideError();
+
+
+    const P =
+        getValue("amLoan");
+
+    const rate =
+        getValue("amRate");
+
+    const tenure =
+        getValue("amTenure");
+
+    const unit =
+        document.getElementById(
+            "amTenureUnit"
+        ).value;
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a loan amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (isNaN(rate) || rate < 0) {
+        showError(
+            "Please enter a valid interest rate."
+        );
+        return;
+    }
+
+
+    if (!tenure || tenure <= 0) {
+        showError(
+            "Please enter a valid loan tenure."
+        );
+        return;
+    }
+
+
+    const months =
+        convertToMonths(
+            tenure,
+            unit
+        );
+
+
+    const monthlyRate =
+        rate / 12 / 100;
+
+
+    const EMI =
+        calculateEMIValue(
+            P,
+            rate,
+            months
+        );
+
+
+    let balance = P;
+
+    let totalInterest = 0;
+
+    let rows = "";
+
+
+    for (
+        let month = 1;
+        month <= months;
+        month++
+    ) {
+
+        const openingBalance =
+            balance;
+
+
+        let interest =
+            balance *
+            monthlyRate;
+
+
+        let principal =
+            EMI - interest;
+
+
+        let payment =
+            EMI;
+
+
+        let closingBalance =
+            balance - principal;
+
+
+        /* Final month correction */
+
+        if (
+            month === months
+        ) {
+
+            principal =
+                balance;
+
+            payment =
+                principal +
+                interest;
+
+            closingBalance =
+                0;
+
+        }
+
+
+        totalInterest +=
+            interest;
+
+
+        rows += `
+
+            <tr>
+
+                <td>
+                    ${month}
+                </td>
+
+                <td>
+                    ${formatMoney(openingBalance)}
+                </td>
+
+                <td>
+                    ${formatMoney(interest)}
+                </td>
+
+                <td>
+                    ${formatMoney(principal)}
+                </td>
+
+                <td>
+                    ${formatMoney(payment)}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        Math.max(
+                            0,
+                            closingBalance
+                        )
+                    )}
+                </td>
+
+            </tr>
+
+        `;
+
+
+        balance =
+            closingBalance;
+
+    }
+
+
+    const totalPayment =
+        P +
+        totalInterest;
+
+
+    showResult(`
+
+        <div class="result-header">
+
+            <h3>
+                Amortization Schedule
+            </h3>
+
+            <span class="result-tag">
+                ${months} MONTHS
+            </span>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <span>Loan Amount</span>
+                <strong>${formatMoney(P)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Monthly EMI</span>
+                <strong>${formatMoney(EMI)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Total Interest</span>
+                <strong>${formatMoney(totalInterest)}</strong>
+            </div>
+
+            <div class="result-card">
+                <span>Total Payment</span>
+                <strong>${formatMoney(totalPayment)}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Month
+                        </th>
+
+                        <th>
+                            Opening Balance
+                        </th>
+
+                        <th>
+                            Interest
+                        </th>
+
+                        <th>
+                            Principal Repaid
+                        </th>
+
+                        <th>
+                            EMI
+                        </th>
+
+                        <th>
+                            Closing Balance
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${rows}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="explanation">
+
+            <strong>Logic:</strong>
+            Monthly interest is calculated from the
+            opening balance. Principal repaid equals
+            EMI minus interest. The closing balance is
+            reduced until the loan reaches zero.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   SCENARIO ANALYSIS
+========================================================= */
+
+function scenarioAnalysis() {
+
+    hideError();
+
+
+    const P =
+        getValue("scLoan");
+
+    const tenure =
+        getValue("scTenure");
+
+    const unit =
+        document.getElementById(
+            "scTenureUnit"
+        ).value;
+
+
+    if (!P || P <= 0) {
+        showError(
+            "Please enter a loan amount greater than zero."
+        );
+        return;
+    }
+
+
+    if (!tenure || tenure <= 0) {
+        showError(
+            "Please enter a valid loan tenure."
+        );
+        return;
+    }
+
+
+    const months =
+        convertToMonths(
+            tenure,
+            unit
+        );
+
+
+    const rates =
+        [8,10,12,15];
+
+
+    const results =
+        rates.map(
+            rate => {
+
+                const EMI =
+                    calculateEMIValue(
+                        P,
+                        rate,
+                        months
+                    );
+
+
+                const totalPayment =
+                    EMI * months;
+
+
+                const totalInterest =
+                    totalPayment - P;
+
+
+                return {
+                    rate,
+                    EMI,
+                    totalPayment,
+                    totalInterest
+                };
+
+            }
+        );
+
+
+    const highestEMI =
+        Math.max(
+            ...results.map(
+                r => r.EMI
+            )
+        );
+
+
+    let html = "";
+
+
+    results.forEach(
+        item => {
+
+            const width =
+                (
+                    item.EMI /
+                    highestEMI
+                ) * 100;
+
+
+            html += `
+
+                <div class="scenario-row">
+
+                    <div class="scenario-top">
+
+                        <span class="scenario-rate">
+                            ${item.rate}%
+                        </span>
+
+                        <span class="scenario-emi">
+                            ${formatMoney(item.EMI)}
+                            / month
+                        </span>
+
+                    </div>
+
+
+                    <div class="scenario-bar">
+
+                        <div
+                            class="scenario-fill"
+                            style="width:${width}%"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="scenario-details">
+
+                        <div class="scenario-detail">
+
+                            Total Payment
+
+                            <strong>
+                                ${formatMoney(
+                                    item.totalPayment
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="scenario-detail">
+
+                            Total Interest
+
+                            <strong>
+                                ${formatMoney(
+                                    item.totalInterest
+                                )}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    showResult(`
+
+        <div class="result-header">
+
+            <h3>
+                Scenario Analysis
+            </h3>
+
+            <span class="result-tag">
+                4 RATES
+            </span>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-card">
+
+                <span>
+                    Loan Amount
+                </span>
+
+                <strong>
+                    ${formatMoney(P)}
+                </strong>
+
+            </div>
+
+
+            <div class="result-card">
+
+                <span>
+                    Loan Tenure
+                </span>
+
+                <strong>
+                    ${tenure} ${unit}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                margin:
+                    15px 0 10px;
+                font-size:
+                    12px;
+                color:
+                    #68756b;
+                font-weight:
+                    700;
+            "
+        >
+
+            Interest Rates Compared:
+            8%, 10%, 12%, 15%
+
+        </div>
+
+
+        ${html}
+
+
+        <div class="explanation">
+
+            <strong>
+                Logic:
+            </strong>
+
+            The loan amount and tenure remain the same,
+            while the application compares four different
+            interest-rate scenarios.
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   ANNUITY CALCULATIONS
+========================================================= */
+
+function calculateAnnuity() {
+
+    hideError();
+
+
+    const type =
+        document.getElementById(
+            "annuityType"
+        ).value;
+
+
+    const mode =
+        document.getElementById(
+            "annuityCalculation"
+        ).value;
+
+
+    const rate =
+        getValue("annuityRate");
+
+
+    const periods =
+        getValue("annuityPeriods");
+
+
+    const frequency =
+        getValue("annuityFrequency");
+
+
+    if (
+        isNaN(rate) ||
+        rate < 0
+    ) {
+
+        showError(
+            "Please enter a valid annual interest rate."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !periods ||
+        periods <= 0
+    ) {
+
+        showError(
+            "Please enter a valid number of payments."
+        );
+
+        return;
+
+    }
+
+
+    const annualRate =
+        rate / 100;
+
+
+    const periodicRate =
+        annualRate /
+        frequency;
+
+
+    let result = 0;
+
+    let primaryLabel = "";
+
+    let explanation = "";
+
+
+    /* =====================================================
+       PV FROM CASH FLOW
+    ====================================================== */
+
+    if (
+        mode === "pv"
+    ) {
+
+        const payment =
+            getValue("annuityPayment");
+
+
+        if (
+            !payment ||
+            payment <= 0
+        ) {
+
+            showError(
+                "Please enter the cash flow / payment amount."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            periodicRate === 0
+        ) {
+
+            result =
+                payment *
+                periods;
+
+        }
+
+        else {
+
+            result =
+                payment *
+                (
+                    1 -
+                    Math.pow(
+                        1 + periodicRate,
+                        -periods
+                    )
+                )
+                /
+                periodicRate;
+
+        }
+
+
+        /* Annuity Due adjustment */
+
+        if (
+            type === "due"
+        ) {
+
+            result *=
+                (
+                    1 +
+                    periodicRate
+                );
+
+        }
+
+
+        primaryLabel =
+            "Present Value";
+
+
+        explanation =
+            type === "ordinary"
+            ?
+            "Payments occur at the end of each period."
+            :
+            "Payments occur at the beginning of each period, so the ordinary annuity value is multiplied by (1 + periodic rate).";
+
+    }
+
+
+    /* =====================================================
+       FV FROM CASH FLOW
+    ====================================================== */
+
+    else if (
+        mode === "fv"
+    ) {
+
+        const payment =
+            getValue("annuityPayment");
+
+
+        if (
+            !payment ||
+            payment <= 0
+        ) {
+
+            showError(
+                "Please enter the cash flow / payment amount."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            periodicRate === 0
+        ) {
+
+            result =
+                payment *
+                periods;
+
+        }
+
+        else {
+
+            result =
+                payment *
+                (
+                    Math.pow(
+                        1 + periodicRate,
+                        periods
+                    ) -
+                    1
+                )
+                /
+                periodicRate;
+
+        }
+
+
+        if (
+            type === "due"
+        ) {
+
+            result *=
+                (
+                    1 +
+                    periodicRate
+                );
+
+        }
+
+
+        primaryLabel =
+            "Future Value";
+
+
+        explanation =
+            type === "ordinary"
+            ?
+            "Payments are made at the end of every period and accumulated to the future."
+            :
+            "Payments are made at the beginning of every period, giving each payment one additional compounding period.";
+
+    }
+
+
+    /* =====================================================
+       PAYMENT FROM PV
+    ====================================================== */
+
+    else if (
+        mode === "pmtPV"
+    ) {
+
+        const PV =
+            getValue("annuityPV");
+
+
+        if (
+            !PV ||
+            PV <= 0
+        ) {
+
+            showError(
+                "Please enter a present value greater than zero."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            periodicRate === 0
+        ) {
+
+            result =
+                PV /
+                periods;
+
+        }
+
+        else {
+
+            result =
+                PV *
+                periodicRate
+                /
+                (
+                    1 -
+                    Math.pow(
+                        1 + periodicRate,
+                        -periods
+                    )
+                );
+
+
+            if (
+                type === "due"
+            ) {
+
+                result /=
+                    (
+                        1 +
+                        periodicRate
+                    );
+
+            }
+
+        }
+
+
+        primaryLabel =
+            "Payment Per Period";
+
+
+        explanation =
+            type === "ordinary"
+            ?
+            "This calculates the equal payment made at the end of each period from the present value."
+            :
+            "This calculates the equal payment made at the beginning of each period from the present value.";
+
+    }
+
+
+    /* =====================================================
+       PAYMENT FROM FV
+    ====================================================== */
+
+    else if (
+        mode === "pmtFV"
+    ) {
+
+        const FV =
+            getValue("annuityFV");
+
+
+        if (
+            !FV ||
+            FV <= 0
+        ) {
+
+            showError(
+                "Please enter a future value greater than zero."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            periodicRate === 0
+        ) {
+
+            result =
+                FV /
+                periods;
+
+        }
+
+        else {
+
+            result =
+                FV *
+                periodicRate
+                /
+                (
+                    Math.pow(
+                        1 + periodicRate,
+                        periods
+                    ) -
+                    1
+                );
+
+
+            if (
+                type === "due"
+            ) {
+
+                result /=
+                    (
+                        1 +
+                        periodicRate
+                    );
+
+            }
+
+        }
+
+
+        primaryLabel =
+            "Payment Per Period";
+
+
+        explanation =
+            type === "ordinary"
+            ?
+            "This calculates the equal end-of-period payment needed to reach the future value."
+            :
+            "This calculates the equal beginning-of-period payment needed to reach the future value.";
+
+    }
+
+
+    const typeName =
+        type === "ordinary"
+        ?
+        "Ordinary Annuity"
+        :
+        "Annuity Due";
+
+
+    const frequencyNameValue =
+        frequency === 1
+        ?
+        "Annual"
+        :
+        frequency === 2
+        ?
+        "Half-Yearly"
+        :
+        frequency === 4
+        ?
+        "Quarterly"
+        :
+        "Monthly";
+
+
+    showResult(`
+
+        <div class="result-header">
+
+            <h3>
+                ${typeName} Result
+            </h3>
+
+            <span class="result-tag">
+                ANNUNITY
+            </span>
+
+        </div>
+
+
+        <div class="primary-result">
+
+            <div class="primary-result-label">
+                ${primaryLabel}
+            </div>
+
+            <div class="primary-result-value">
+                ${formatMoney(result)}
+            </div>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-card">
+
+                <span>
+                    Annuity Type
+                </span>
+
+                <strong>
+                    ${typeName}
+                </strong>
+
+            </div>
+
+
+            <div class="result-card">
+
+                <span>
+                    Interest Rate
+                </span>
+
+                <strong>
+                    ${rate}% / year
+                </strong>
+
+            </div>
+
+
+            <div class="result-card">
+
+                <span>
+                    Payments
+                </span>
+
+                <strong>
+                    ${periods}
+                </strong>
+
+            </div>
+
+
+            <div class="result-card">
+
+                <span>
+                    Frequency
+                </span>
+
+                <strong>
+                    ${frequencyNameValue}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="explanation">
+
+            <strong>
+                Logic:
+            </strong>
+
+            ${explanation}
+
+        </div>
+
+    `);
+}
+
+
+/* =========================================================
+   SAMPLE VALUES
+========================================================= */
+
+function sampleFV() {
+
+    document.getElementById(
+        "fvPrincipal"
+    ).value = 100000;
+
+    document.getElementById(
+        "fvRate"
+    ).value = 10;
+
+    document.getElementById(
+        "fvTime"
+    ).value = 5;
+
+    document.getElementById(
+        "fvTimeUnit"
+    ).value = "years";
+}
+
+
+function samplePV() {
+
+    document.getElementById(
+        "pvFuture"
+    ).value = 150000;
+
+    document.getElementById(
+        "pvRate"
+    ).value = 10;
+
+    document.getElementById(
+        "pvTime"
+    ).value = 5;
+
+    document.getElementById(
+        "pvTimeUnit"
+    ).value = "years";
+}
+
+
+function sampleSI() {
+
+    document.getElementById(
+        "siPrincipal"
+    ).value = 100000;
+
+    document.getElementById(
+        "siRate"
+    ).value = 8;
+
+    document.getElementById(
+        "siTime"
+    ).value = 6;
+
+    document.getElementById(
+        "siTimeUnit"
+    ).value = "months";
+}
+
+
+function sampleCI() {
+
+    document.getElementById(
+        "ciPrincipal"
+    ).value = 100000;
+
+    document.getElementById(
+        "ciRate"
+    ).value = 10;
+
+    document.getElementById(
+        "ciTime"
+    ).value = 5;
+
+    document.getElementById(
+        "ciTimeUnit"
+    ).value = "years";
+
+    document.getElementById(
+        "ciFrequency"
+    ).value = 12;
+}
+
+
+function sampleEMI() {
+
+    document.getElementById(
+        "emiLoan"
+    ).value = 500000;
+
+    document.getElementById(
+        "emiRate"
+    ).value = 10.5;
+
+    document.getElementById(
+        "emiTenure"
+    ).value = 60;
+
+    document.getElementById(
+        "emiTenureUnit"
+    ).value = "months";
+}
+
+
+function sampleAmortization() {
+
+    document.getElementById(
+        "amLoan"
+    ).value = 500000;
+
+    document.getElementById(
+        "amRate"
+    ).value = 10.5;
+
+    document.getElementById(
+        "amTenure"
+    ).value = 5;
+
+    document.getElementById(
+        "amTenureUnit"
+    ).value = "years";
+}
+
+
+function sampleScenario() {
+
+    document.getElementById(
+        "scLoan"
+    ).value = 500000;
+
+    document.getElementById(
+        "scTenure"
+    ).value = 5;
+
+    document.getElementById(
+        "scTenureUnit"
+    ).value = "years";
+}
+
+
+function sampleAnnuity() {
+
+    document.getElementById(
+        "annuityType"
+    ).value =
+        "ordinary";
+
+
+    document.getElementById(
+        "annuityCalculation"
+    ).value =
+        "pv";
+
+
+    updateAnnuityFields();
+
+
+    document.getElementById(
+        "annuityPayment"
+    ).value =
+        10000;
+
+
+    document.getElementById(
+        "annuityRate"
+    ).value =
+        10;
+
+
+    document.getElementById(
+        "annuityPeriods"
+    ).value =
+        60;
+
+
+    document.getElementById(
+        "annuityFrequency"
+    ).value =
+        12;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetCurrent() {
+
+    hideError();
+
+    clearResult();
+
+    loadForm(
+        currentCalculator
+    );
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+selectCalculator("fv");
+
+</script>
+
+</body>
+
+</html>
